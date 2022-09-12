@@ -1,0 +1,36 @@
+version: '3.9'
+
+services:
+#  app:
+#    build:
+#      dockerfile: Dockerfile
+#      context: .
+#    depends_on:
+#      - db
+#    container_name: nestjs
+#    command: npm run start:dev
+#    volumes:
+#      - ./:/makita_be
+#    environment:
+#      NODE_ENV: development
+#      PORT: ${NEST_PORT}
+#    ports:
+#      - ${NEST_PORT}:3000
+#    env_file:
+#      - .env
+
+  db:
+    container_name: db_nest
+    image: postgres:${DATABASE_VERSION}
+    environment:
+      - POSTGRES_USER=${DATABASE_USERNAME}
+      - POSTGRES_PASSWORD=${DATABASE_PASSWORD}
+      - POSTGRES_DB=${DATABASE_NAME}
+      - PGDATA=/var/lib/postgresql/data/
+    volumes:
+      - ./pgdata:/var/lib/postgresql/data
+      - ./postgresql.conf:/etc/postgresql.conf
+    ports:
+      - ${DATABASE_PORT}:5432
+    env_file:
+      - .env
